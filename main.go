@@ -28,7 +28,7 @@ var (
 func usage() {
 	fmt.Fprintf(
 		os.Stderr,
-		"gobigdrop version: 1.0.0\nUsage: gobigdrop [-h host] [-P port] [-u user] [-p password] [-d database] [-t table] [--log logfile] [--level loglevel] [--askpass]\n\nOptions:\n")
+		"gobigdrop version: 1.0.0\nUsage: gobigdrop [--host host] [--port port] [--user user] [--password password] [--db database] [--table table] [--log logfile] [--level loglevel] [--askpass]\n\nOptions:\n")
 	flag.PrintDefaults()
 }
 
