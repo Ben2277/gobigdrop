@@ -2,16 +2,12 @@
 
 gobigdrop适用于MySQL大表删除，利用MySQL Drop操作机制结合Linux硬链接对大表进行删除，旨在减少线上系统的性能抖动。
 
+&nbsp;
 ### 安装说明
+[二进制免安装](https://github.com/Ben2277/gobigdrop/releases)
 
-
-#### 二进制免安装
-
-
-
-
+&nbsp;
 ### 使用说明
-
 
 ```
 # ./gobigdrop --help
@@ -39,10 +35,8 @@ Options:
         MySQL user.
 ```
 
-
+&nbsp;
 #### 简单示例
-
-
 ```
 # ./gobigdrop --host=xxx.xxx.xxx.xxx --port=xxxx --user=xxx --askpass --db=xxx --table=xxx
 Enter password: 
