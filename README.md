@@ -44,16 +44,16 @@ Options:
 
 
 ```
-# ./gobigdrop --host=148.70.127.235 --port=3307 --user=joyee --askpass --db=test --table=usertb
+# ./gobigdrop --host=xxx.xxx.xxx.xxx --port=xxxx --user=xxx --askpass --db=xxx --table=xxx
 Enter password: 
-INFO[2021-01-08 13:32:40] MySQL Connection: joyee@148.70.127.235:3307/test 
-INFO[2021-01-08 13:32:40] MySQL Version: 57                            
-INFO[2021-01-08 13:32:40] Checked                                       Table=usertb
-INFO[2021-01-08 13:32:40] Get ibd & frm files successfully              Table=usertb
-INFO[2021-01-08 13:32:40] Created                                       Hardlink=/data/mysql/3307/data/test/usertb.ibd.hlink
-INFO[2021-01-08 13:32:40] Created                                       Hardlink=/data/mysql/3307/data/test/usertb.frm.hlink
-INFO[2021-01-08 13:32:40] Dropped                                       Table=usertb
-INFO[2021-01-08 13:32:40] Deleted                                       Hardlink=/data/mysql/3307/data/test/usertb.ibd.hlink
-INFO[2021-01-08 13:32:40] Deleted                                       Hardlink=/data/mysql/3307/data/test/usertb.frm.hlink
+INFO[2021-01-08 13:32:40] MySQL Connection: xxx@xxx.xxx.xxx.xxx:xxx/xxx
+INFO[2021-01-08 13:32:40] MySQL Version: xxx                            
+INFO[2021-01-08 13:32:40] Checked                                       Table=xxx
+INFO[2021-01-08 13:32:40] Get ibd & frm files successfully              Table=xxx
+INFO[2021-01-08 13:32:40] Created                                       Hardlink=/xxx/xxx.ibd.hlink
+INFO[2021-01-08 13:32:40] Created                                       Hardlink=/xxx/xxx.frm.hlink
+INFO[2021-01-08 13:32:40] Dropped                                       Table=xxx
+INFO[2021-01-08 13:32:40] Deleted                                       Hardlink=/xxx/xxx.ibd.hlink
+INFO[2021-01-08 13:32:40] Deleted                                       Hardlink=/xxx/xxx.frm.hlink
 INFO[2021-01-08 13:32:40] Done 
 ```
