@@ -119,7 +119,7 @@ func CheckMySQLTable(c *client.Conn, db string, table string) (bool, error) {
 		return true, nil
 	}
 
-	nuerr := errors.New(db + "." + table + " check failed")
+	nuerr := errors.New("Check failed")
 	return false, nuerr
 }
 
@@ -140,10 +140,10 @@ func MySQLSafeDrop(conn *client.Conn, db string, table string, log *logrus.Logge
 	//  MySQL表存在则获取表对应的ibd和frm文件
 	fmap, err := GetMySQLTableFile(conn, db, table)
 	if err != nil {
-		log.Error(err.Error())
+		log.WithFields(logrus.Fields{"Table": table}).Error(err.Error())
 		return
 	} else {
-		log.Info("Table: " + table + ", Get ibd & frm files successfully")
+		log.WithFields(logrus.Fields{"Table": table}).Info("Get ibd & frm files successfully")
 	}
 
 	// 待操作文件slice
@@ -152,39 +152,39 @@ func MySQLSafeDrop(conn *client.Conn, db string, table string, log *logrus.Logge
 	// 创建硬链接，后缀.hlink
 	for i, f := range filesli {
 		if hl, err := utils.CreateHardLink(f); err != nil {
-			log.Error(err.Error())
+			log.WithFields(logrus.Fields{"Hardlink": hl}).Error(err.Error())
 
 			// rollback上一个硬链接的创建
 			if i-1 >= 0 {
 				if hl, err := utils.DropHardLink(filesli[i-1]); err != nil {
-					log.Error(err.Error())
+					log.WithFields(logrus.Fields{"Hardlink": hl}).Error(err.Error())
 					return
 				} else {
-					log.Info("Hardlink: " + hl + ", Deleted")
+					log.WithFields(logrus.Fields{"Hardlink": hl}).Info("Deleted")
 				}
 			}
 
 			return
 		} else {
-			log.Info("Hardlink: " + hl + ", Created")
+			log.WithFields(logrus.Fields{"Hardlink": hl}).Info("Created")
 		}
 	}
 
 	// 在MySQL中进行DROP TABLE操作
 	if err := DropMySQLTable(conn, db, table); err != nil {
-		log.Error(err)
+		log.WithFields(logrus.Fields{"Table": table}).Error(err)
 		return
 	} else {
-		log.Info("Table: " + table + ", Dropped")
+		log.WithFields(logrus.Fields{"Table": table}).Info("Dropped")
 	}
 
 	// 删除硬链接，后缀.hlink
 	for _, f := range filesli {
 		if hl, err := utils.DropHardLink(f); err != nil {
-			log.Error(err.Error())
+			log.WithFields(logrus.Fields{"Hardlink": hl}).Error(err.Error())
 			return
 		} else {
-			log.Info("Hardlink: " + hl + ", Deleted")
+			log.WithFields(logrus.Fields{"Hardlink": hl}).Info("Deleted")
 		}
 	}
 }
@@ -194,34 +194,34 @@ func MySQL80SafeDrop(conn *client.Conn, db string, table string, log *logrus.Log
 	// MySQL表存在则获取表对应的ibd和frm文件
 	fmap, err := GetMySQLTableFile(conn, db, table)
 	if err != nil {
-		log.Error(err.Error())
+		log.WithFields(logrus.Fields{"Table": table}).Error(err.Error())
 		return
 	} else {
-		log.Info("Table: " + table + ", Get ibd file successfully")
+		log.WithFields(logrus.Fields{"Table": table}).Info("Get ibd file successfully")
 	}
 
 	// 创建硬链接，后缀.hlink
 	f := fmap["ibd"]
 	if hl, err := utils.CreateHardLink(f); err != nil {
-		log.Error(err.Error())
+		log.WithFields(logrus.Fields{"Hardlink": hl}).Error(err.Error())
 		return
 	} else {
-		log.Info("Hardlink: " + hl + ", Created")
+		log.WithFields(logrus.Fields{"Hardlink": hl}).Info("Created")
 	}
 
 	// 在MySQL中进行DROP TABLE操作
 	if err := DropMySQLTable(conn, db, table); err != nil {
-		log.Error(err)
+		log.WithFields(logrus.Fields{"Table": table}).Error(err)
 		return
 	} else {
-		log.Info("Table: " + table + ", Dropped")
+		log.WithFields(logrus.Fields{"Table": table}).Info("Dropped")
 	}
 
 	// 删除硬链接，后缀.hlink
 	if hl, err := utils.DropHardLink(f); err != nil {
-		log.Error(err.Error())
+		log.WithFields(logrus.Fields{"Hardlink": hl}).Error(err.Error())
 		return
 	} else {
-		log.Info("Hardlink: " + hl + ", Deleted")
+		log.WithFields(logrus.Fields{"Hardlink": hl}).Info("Deleted")
 	}
 }

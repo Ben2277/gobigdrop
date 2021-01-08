@@ -10,6 +10,7 @@ import (
 	"gobigdrop/utils"
 
 	"github.com/howeyc/gopass"
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -77,8 +78,7 @@ func main() {
 	defer conn.Close()
 
 	if err != nil {
-		logger.Error(err.Error())
-		os.Exit(1)
+		logger.Fatal(err.Error())
 	} else {
 		logger.Info("MySQL Connection: " + user + "@" + host + ":" + strconv.Itoa(port) + "/" + database)
 	}
@@ -86,8 +86,7 @@ func main() {
 	// 查询MySQL版本
 	verint, err := mysql.GetMySQLVersion(conn)
 	if err != nil {
-		logger.Error(err.Error())
-		os.Exit(1)
+		logger.Fatal(err.Error())
 	} else {
 		logger.Info("MySQL Version: " + strconv.Itoa(verint))
 	}
@@ -95,10 +94,9 @@ func main() {
 	// 验证待MySQL表元信息
 	tabbool, err := mysql.CheckMySQLTable(conn, database, table)
 	if err != nil {
-		logger.Error(err.Error())
-		os.Exit(1)
+		logger.WithFields(logrus.Fields{"Table": table}).Fatal(err.Error())
 	} else {
-		logger.Info("Table: " + table + ", Checked")
+		logger.WithFields(logrus.Fields{"Table": table}).Info("Checked")
 	}
 
 	if tabbool == true {
@@ -112,8 +110,7 @@ func main() {
 		}
 	} else {
 		// 待删除表不存在则打印日志退出
-		logger.Info("Table: " + table + ", Does not exist")
-		os.Exit(1)
+		logger.WithFields(logrus.Fields{"Table": table}).Fatal("Does not exist")
 	}
 
 	// end
